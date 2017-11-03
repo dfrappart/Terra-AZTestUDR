@@ -1,0 +1,289 @@
+# Output main
+
+output "ResourceGroupCreatedName" {
+
+    value = "${module.ResourceGroup.Name}"
+}
+
+output "ResourceGroupCreatedId" {
+
+    value = "${module.ResourceGroup.Id}"
+}
+
+output "vNetCreatedName" {
+
+    value = "${module.vNet.Name}"
+}
+
+output "vNetCreatedId" {
+
+    value = "${module.vNet.Id}"
+}
+
+output "vNetCreatedAddressSpace" {
+
+    value = "${module.vNet.AddressSpace}"
+}
+
+output "RDS_Servers_PublicIPs" {
+
+    value = "${module.RDSVM.PublicIP}"
+
+}
+
+output "RDS_Servers_Fqdns" {
+
+    value = "${module.RDSVM.Fqdns}"
+
+}
+
+# Subnet output
+
+#Blue Network
+
+output "Blue-Network-Name" {
+
+  value = "${module.Blue-Network.Name}"
+}
+
+output "Blue-Network-Id" {
+
+  value = "${module.Blue-Network.Id}"
+}
+
+output "Blue-Network-AddressPrefix" {
+
+  value = "${module.Blue-Network.AddressPrefix}"
+}
+
+#RedNetwork
+
+output "Red-Network-Name" {
+
+  value = "${module.Red-Network.Name}"
+}
+
+output "Red-Network-Id" {
+
+  value = "${module.Red-Network.Id}"
+}
+
+output "Red-Network-AddressPrefix" {
+
+  value = "${module.Red-Network.AddressPrefix}"
+}
+
+#SW-A-Red
+
+output "SW-A-Red-Network-Name" {
+
+  value = "${module.SW-A-Red-Network.Name}"
+}
+
+output "SW-A-Red-Network-Id" {
+
+  value = "${module.SW-A-Red-Network.Id}"
+}
+
+output "SW-A-Red-AddressPrefix" {
+
+  value = "${module.SW-A-Red-Network.AddressPrefix}"
+}
+
+#ATS_Network
+
+output "ATS-Network-Name" {
+
+  value = "${module.ATS-Network.Name}"
+}
+
+output "ATS-Network-Id" {
+
+  value = "${module.ATS-Network.Id}"
+}
+
+output "ATS-Network-AddressPrefix" {
+
+  value = "${module.ATS-Network.AddressPrefix}"
+}
+
+#SIG-Blue-Network
+
+output "SIG-Blue-Network-Name" {
+
+  value = "${module.SIG-Blue-Network.Name}"
+}
+
+output "SIG-Blue-Network-Id" {
+
+  value = "${module.SIG-Blue-Network.Id}"
+}
+
+output "SIG-Blue-Network-AddressPrefix" {
+
+  value = "${module.SIG-Blue-Network.AddressPrefix}"
+}
+
+#NSG output
+/*
+#Blue Network NSG
+
+output "NSGBlue-Network-Name" {
+
+  value = "${module.NSGBlue-Network.Name}"
+}
+
+output "NSGBlue-Network-Id" {
+
+  value = "${module.NSGBlue-Network.Id}"
+}
+
+#Red Network NSG
+
+output "NSGRed-Network-Name" {
+
+  value = "${module.NSGRed-Network.Name}"
+}
+
+output "NSGRed-Network-Id" {
+
+  value = "${module.NSGRed-Network.Id}"
+}
+
+#NSGSW-A-Red
+
+output "NSGSW-A-Red-Name" {
+
+  value = "${module.NSGSW-A-Red.Name}"
+}
+
+output "NSGSW-A-Red-Id" {
+
+  value = "${module.NSGSW-A-Red.Id}"
+}
+
+#NSGATS-Network
+
+output "NSGATS-Network-Name" {
+
+  value = "${module.NSGATS-Network.Name}"
+}
+
+output "NSGATS-Network-Id" {
+
+  value = "${module.NSGATS-Network.Id}"
+}
+
+#NSGSIG-Blue-Network
+
+output "NSGSIG-Blue-Network-Name" {
+
+  value = "${module.NSGSIG-Blue-Network.Name}"
+}
+
+output "NSGSIG-Blue-Network-Id" {
+
+  value = "${module.NSGSIG-Blue-Network.Id}"
+}
+*/
+
+#############################################################
+#Serv-ats-01 Server output
+#############################################################
+output "NIC-SERV-ATS-01Name" {
+
+  value = "${module.NIC-SERV-ATS-01.Name}"
+}
+
+output "NIC-SERV-ATS-01Id" {
+
+  value = "${module.NIC-SERV-ATS-01.Id}"
+}
+
+output "SERV-ATS-01PrivateIP" {
+
+  value = "${module.NIC-SERV-ATS-01.PrivateIP}"
+}
+
+
+output "NIC-SERV-ATS-01MAC" {
+
+  value = "${module.NIC-SERV-ATS-01.MAC}"
+}
+
+############################################################
+#WRS-HMI-A Server output
+############################################################
+
+output "NIC-WRS-HMI-AName" {
+
+  value = "${module.NIC-WRS-HMI-A.Name}"
+}
+
+output "NIC-WRS-HMI-AId" {
+
+  value = "${module.NIC-WRS-HMI-A.Id}"
+}
+
+output "NIC-WRS-HMI-APrivateIP" {
+
+  value = "${module.NIC-WRS-HMI-A.PrivateIP}"
+}
+
+
+output "NIC-WRS-HMI-AMAC" {
+
+  value = "${module.NIC-WRS-HMI-A.MAC}"
+}
+
+##############################################################
+# Simulator Server output
+############################################################
+
+output "NIC-SimulatorName" {
+
+  value = "${module.NIC-Simulator.Name}"
+}
+
+output "NIC-SimulatorId" {
+
+  value = "${module.NIC-Simulator.Id}"
+}
+
+output "NIC-SimulatorPrivateIP" {
+
+  value = "${module.NIC-Simulator.PrivateIP}"
+}
+
+
+output "NIC-SimulatorMAC" {
+
+  value = "${module.NIC-Simulator.MAC}"
+}
+
+
+##############################################################
+# Router Server output
+############################################################
+/*
+output "NIC-SimulatorName" {
+
+  value = "${module.NIC-Simulator.Name}"
+}
+
+output "NIC-SimulatorId" {
+
+  value = "${module.NIC-Simulator.Id}"
+}
+
+output "NIC-SimulatorPrivateIP" {
+
+  value = "${module.NIC-Simulator.PrivateIP}"
+}
+
+
+output "NIC-SimulatorMAC" {
+
+  value = "${module.NIC-Simulator.MAC}"
+}
+*/

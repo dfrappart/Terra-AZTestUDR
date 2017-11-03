@@ -1,0 +1,189 @@
+##################################################################################
+#Creating VMRouterRedBluePurpleGreen
+##################################################################################
+
+#Availability set creation for RouterRedBluePurpleGreen VM
+
+module "AS-RouterRedBluePurpleGreen" {
+
+    #module location
+    source = "./Modules/AvailabilitySet"
+    
+
+    #Module variable
+    ASName                      = "RouterRedBluePurpleGreen-AS"
+    ASLocation                  = "${var.AzureRegion}"
+    RGName                      = "${module.ResourceGroup.Name}"
+    EnvironmentTag              = "${var.EnvironmentTag}"
+    EnvironmentUsageTag         = "${var.EnvironmentUsageTag}"
+}
+
+
+###################################################################################
+#RouterRedBluePurpleGreen Red NIC Creation
+###################################################################################
+
+module "NIC-RouterRedBluePurpleGreen-Red-Network" {
+
+    #Module Location
+    source = "./Modules/NICwithoutPIP"
+
+    #Module variable
+    NICName                 = "RouterRedBluePurpleGreen-Red-Network-NIC"
+    NICLocation             = "${var.AzureRegion}"
+    RGName                  = "${module.ResourceGroup.Name}"
+    SubnetId                = "${module.Red-Network.Id}"
+    SubnetRange             = "${lookup(var.SubnetAddressRange, 2)}"
+    PrivateIpmodifier       = "6"
+    EnvironmentTag          = "${var.EnvironmentTag}"
+    EnvironmentUsageTag     = "${var.EnvironmentUsageTag}"
+}
+
+
+module "NIC-RouterRedBluePurpleGreen-Blue-Network" {
+
+    #Module Location
+    source = "./Modules/NICwithoutPIP"
+
+    #Module variable
+    NICName                 = "RouterRedBluePurpleGreen-Blue-Network-NIC"
+    NICLocation             = "${var.AzureRegion}"
+    RGName                  = "${module.ResourceGroup.Name}"
+    SubnetId                = "${module.Blue-Network.Id}"
+    SubnetRange             = "${lookup(var.SubnetAddressRange, 1)}"
+    PrivateIpmodifier       = "6"
+    EnvironmentTag          = "${var.EnvironmentTag}"
+    EnvironmentUsageTag     = "${var.EnvironmentUsageTag}"
+}
+
+module "NIC-RouterRedBluePurpleGreen-Purple-Network" {
+
+    #Module Location
+    source = "./Modules/NICwithoutPIP"
+
+    #Module variable
+    NICName                 = "RouterRedBluePurpleGreen-Purple-Network-NIC"
+    NICLocation             = "${var.AzureRegion}"
+    RGName                  = "${module.ResourceGroup.Name}"
+    SubnetId                = "${module.Purple-Network.Id}"
+    SubnetRange             = "${lookup(var.SubnetAddressRange, 5)}"
+    PrivateIpmodifier       = "5"
+    EnvironmentTag          = "${var.EnvironmentTag}"
+    EnvironmentUsageTag     = "${var.EnvironmentUsageTag}"
+}
+
+module "NIC-RouterRedBluePurpleGreen-Green-Network" {
+
+    #Module Location
+    source = "./Modules/NICwithoutPIP"
+
+    #Module variable
+    NICName                 = "RouterRedBluePurpleGreen-Green-Network-NIC"
+    NICLocation             = "${var.AzureRegion}"
+    RGName                  = "${module.ResourceGroup.Name}"
+    SubnetId                = "${module.Blue-Network.Id}"
+    SubnetRange             = "${lookup(var.SubnetAddressRange, 3)}"
+    PrivateIpmodifier       = "7"
+    EnvironmentTag          = "${var.EnvironmentTag}"
+    EnvironmentUsageTag     = "${var.EnvironmentUsageTag}"
+}
+
+
+#Datadisk creation
+
+#Datadisk creation for RouterRedBluePurpleGreen VM
+
+module "Datadisk-RouterRedBluePurpleGreen" {
+
+    #Module Location
+    source = "./Modules/ManagedDisks"    
+    
+    #Module variable
+    ManageddiskName         = "RouterRedBluePurpleGreen-Datadisk"
+    RGName                  = "${module.ResourceGroup.Name}"
+    ManagedDiskLocation     = "${var.AzureRegion}"
+    StorageAccountType      = "${lookup(var.Manageddiskstoragetier, 1)}"
+    CreateOption            = "empty"
+    DiskSizeInGB            = "63"
+    EnvironmentTag          = "${var.EnvironmentTag}"
+    EnvironmentUsageTag     = "${var.EnvironmentUsageTag}"
+}
+
+
+#VM Creation
+
+
+resource "azurerm_virtual_machine" "RouterRedBluePurpleGreen" {
+
+    name                            = "RouterRedBluePurpleGreen"
+    location                        = "${var.AzureRegion}"
+    resource_group_name             = "${module.ResourceGroup.Name}"
+    network_interface_ids           = ["${module.NIC-RouterRedBluePurpleGreen-Red-Network.Id}",
+                                        "${module.NIC-RouterRedBluePurpleGreen-Blue-Network.Id}",
+                                        "${module.NIC-RouterRedBluePurpleGreen-Purple-Network.Id}",
+                                        "${module.NIC-RouterRedBluePurpleGreen-Green-Network.Id}",
+                                       
+                                        ]
+    primary_network_interface_id    = "${module.NIC-RouterRedBluePurpleGreen-Red-Network.Id}"
+    vm_size                         = "${lookup(var.VMSize, 2)}"
+    availability_set_id             = "${module.AS-RouterRedBluePurpleGreen.Id}"
+    
+    
+
+
+    storage_image_reference {
+        #get appropriate image info with the following command
+        #Get-AzureRmVMImageSku -Location westeurope -Offer windowsserver -PublisherName microsoftwindowsserver
+        publisher   = "${lookup(var.PublisherName, 2)}"
+        offer       = "${lookup(var.Offer, 2)}"
+        sku         = "${lookup(var.sku, 2)}"
+        version     = "latest"
+
+    }
+
+    storage_os_disk {
+
+        name                = "RouterRedBluePurpleGreen-OSDisk"
+        caching             = "ReadWrite"
+        create_option       = "FromImage"
+        managed_disk_type   = "${lookup(var.Manageddiskstoragetier, 1)}"
+
+    }
+
+    storage_data_disk {
+
+        name                = "${module.Datadisk-RouterRedBluePurpleGreen.Name}"
+        managed_disk_id     = "${module.Datadisk-RouterRedBluePurpleGreen.Id}"
+        create_option       = "Attach"
+        lun                 = 0
+        disk_size_gb        = "${module.Datadisk-RouterRedBluePurpleGreen.Size}"
+        
+
+    }
+
+    os_profile {
+
+        computer_name   = "RouterRedBluePurpleGreen"
+        admin_username  = "${var.VMAdminName}"
+        admin_password  = "${var.VMAdminPassword}"
+
+    }
+
+    os_profile_linux_config {
+    
+    disable_password_authentication = false
+
+    ssh_keys {
+      path     = "/home/${var.VMAdminName}/.ssh/authorized_keys"
+      key_data = "${var.AzurePublicSSHKey}"
+    }
+    
+    }
+
+    tags {
+    environment = "${var.EnvironmentTag}"
+    usage       = "${var.EnvironmentUsageTag}"
+    }   
+    
+
+}

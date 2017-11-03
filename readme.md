@@ -1,0 +1,1 @@
+#This template deploy a sample architecture based mostly on modules with multiple VMs and NICs, testing udr between VM in different subnet
