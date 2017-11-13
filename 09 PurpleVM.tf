@@ -24,7 +24,7 @@ module "AS-purpleVM" {
 module "NIC-purpleVM" {
 
     #Module Location
-    source = "./Modules/NICwithoutPIP"
+    source = "./Modules/NICwithoutPIPfixedprivateIP"
 
     #Module variable
     NICName                 = "purpleVM-NIC"

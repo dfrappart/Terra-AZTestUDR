@@ -24,7 +24,7 @@ module "AS-redVM" {
 module "NIC-redVM" {
 
     #Module Location
-    source = "./Modules/NICwithoutPIP"
+    source = "./Modules/NICwithoutPIPfixedprivateIP"
 
     #Module variable
     NICName                 = "redVM-NIC"

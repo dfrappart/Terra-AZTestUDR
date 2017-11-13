@@ -24,7 +24,7 @@ module "AS-yellowVM02" {
 module "NIC-yellowVM02" {
 
     #Module Location
-    source = "./Modules/NICwithoutPIP"
+    source = "./Modules/NICwithoutPIPfixedprivateIP"
 
     #Module variable
     NICName                 = "yellowVM02-NIC"

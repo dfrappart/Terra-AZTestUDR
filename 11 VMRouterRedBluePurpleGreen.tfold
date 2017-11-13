@@ -43,7 +43,7 @@ module "NIC-RouterRedBluePurpleGreen-Red-Network" {
 module "NIC-RouterRedBluePurpleGreen-Blue-Network" {
 
     #Module Location
-    source = "./Modules/NICwithoutPIP"
+    source = "./Modules/NICwithoutPIPfixedprivateIP"
 
     #Module variable
     NICName                 = "RouterRedBluePurpleGreen-Blue-Network-NIC"

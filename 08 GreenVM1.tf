@@ -24,7 +24,7 @@ module "AS-greenVM" {
 module "NIC-greenVM" {
 
     #Module Location
-    source = "./Modules/NICwithoutPIP"
+    source = "./Modules/NICwithoutPIPfixedprivateIP"
 
     #Module variable
     NICName                 = "greenVM-NIC"

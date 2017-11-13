@@ -47,7 +47,7 @@ module "NIC-RouterYellowGreen-Yellow-Network" {
 module "NIC-RouterYellowGreen-Green-Network" {
 
     #Module Location
-    source = "./Modules/NICwithoutPIP"
+    source = "./Modules/NICwithoutPIPfixedprivateIP"
 
     #Module variable
     NICName                 = "RouterYellowGreen-Green-Network-NIC"
